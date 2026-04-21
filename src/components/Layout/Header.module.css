@@ -1,0 +1,41 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(120, 60, 60, 0.08);
+}
+
+.logo {
+  height: 42px;
+  object-fit: contain;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user {
+  font-size: 0.9rem;
+  color: #7a5c3a;
+  font-weight: 600;
+}
+
+.header button {
+  padding: 0.4rem 1rem;
+  background: linear-gradient(135deg, #c07070, #e0a080);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.header button:hover {
+  opacity: 0.88;
+}

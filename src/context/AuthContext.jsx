@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { login as loginService } from '../services/authService'
+import { login as loginService, logout as logoutService } from '../services/authService'
 import { tokenStorage } from '../services/tokenStorage'
 
 const AuthContext = createContext(null)
@@ -17,7 +17,8 @@ export function AuthProvider({ children }) {
     return { success }
   }
 
-  function logout() {
+  async function logout() {
+    await logoutService()
     tokenStorage.clear()
     setUser(null)
   }

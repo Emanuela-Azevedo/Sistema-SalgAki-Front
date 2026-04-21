@@ -8,14 +8,14 @@ export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const [form, setForm] = useState({ email: '', senha: '' })
+  const [form, setForm] = useState({ username: '', senha: '' })
   const [errors, setErrors] = useState({})
   const [apiError, setApiError] = useState('')
   const [loading, setLoading] = useState(false)
 
   function validate() {
     const errs = {}
-    if (!form.email.trim()) errs.email = 'E-mail obrigatório'
+    if (!form.username.trim()) errs.username = 'Username obrigatório'
     if (!form.senha.trim()) errs.senha = 'Senha obrigatória'
     return errs
   }
@@ -33,7 +33,7 @@ export default function Login() {
     if (Object.keys(errs).length) return setErrors(errs)
 
     setLoading(true)
-    const { success, error } = await login(form.email, form.senha)
+    const { success, error } = await login(form.username, form.senha)
     setLoading(false)
 
     if (!success) return setApiError(error)
@@ -50,17 +50,17 @@ export default function Login() {
         <h2 className={styles.loginTitle}>Login</h2>
 
         <div className={styles.field}>
-          <label htmlFor="email">E-mail:</label>
+          <label htmlFor="username">Username:</label>
           <input
-            id="email"
-            name="email"
-            type="email"
-            value={form.email}
+            id="username"
+            name="username"
+            type="text"
+            value={form.username}
             onChange={handleChange}
-            placeholder="seu@email.com"
-            autoComplete="email"
+            placeholder="seu usuário"
+            autoComplete="username"
           />
-          {errors.email && <span className={styles.error}>{errors.email}</span>}
+          {errors.username && <span className={styles.error}>{errors.username}</span>}
         </div>
 
         <div className={styles.field}>

@@ -9,6 +9,6 @@
  * @param {string} senha
  * @returns {LoginRequest}
  */
-export function createLoginRequest(email, senha) {
-  return { email, senha }
+export function createLoginRequest(username, senha) {
+  return { username, senha }
 }

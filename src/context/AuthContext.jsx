@@ -7,8 +7,8 @@ const AuthContext = createContext(null)
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(tokenStorage.getUser)
 
-  async function login(username, senha) {
-    const { success, data, error } = await loginService(username, senha)
+  async function login(username, password) {
+    const { success, data, error } = await loginService(username, password)
     if (!success) return { success, error }
 
     tokenStorage.setToken(data.token)

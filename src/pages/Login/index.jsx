@@ -8,7 +8,7 @@ export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const [form, setForm] = useState({ username: '', senha: '' })
+  const [form, setForm] = useState({ username: '', password: '' })
   const [errors, setErrors] = useState({})
   const [apiError, setApiError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -16,7 +16,7 @@ export default function Login() {
   function validate() {
     const errs = {}
     if (!form.username.trim()) errs.username = 'Username obrigatório'
-    if (!form.senha.trim()) errs.senha = 'Senha obrigatória'
+    if (!form.password.trim()) errs.password = 'Senha obrigatória'
     return errs
   }
 
@@ -33,7 +33,7 @@ export default function Login() {
     if (Object.keys(errs).length) return setErrors(errs)
 
     setLoading(true)
-    const { success, error } = await login(form.username, form.senha)
+    const { success, error } = await login(form.username, form.password)
     setLoading(false)
 
     if (!success) return setApiError(error)
@@ -64,17 +64,17 @@ export default function Login() {
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="senha">Senha:</label>
+          <label htmlFor="password">Senha:</label>
           <input
-            id="senha"
-            name="senha"
+            id="password"
+            name="password"
             type="password"
-            value={form.senha}
+            value={form.password}
             onChange={handleChange}
             placeholder="••••••••"
             autoComplete="current-password"
           />
-          {errors.senha && <span className={styles.error}>{errors.senha}</span>}
+          {errors.password && <span className={styles.error}>{errors.password}</span>}
         </div>
 
         {apiError && <p className={styles.apiError}>{apiError}</p>}

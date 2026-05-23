@@ -1,7 +1,7 @@
 import ProdutoItem from './ProdutoItem'
 import styles from '../Produtos.module.css'
 
-export default function ProdutoList({ produtos, categorias, onEdit, onDelete, editandoId, editForm, setEditForm, onIniciarEdicao, onCancelarEdicao }) {
+export default function ProdutoList({ produtos, categorias, onEdit, onDelete, editandoId, editForm, setEditForm, onIniciarEdicao, onCancelarEdicao, onMovimentar, onRelatorio }) {
     return (
         <table className={styles.table}>
             <thead>
@@ -26,6 +26,8 @@ export default function ProdutoList({ produtos, categorias, onEdit, onDelete, ed
                         setEditForm={setEditForm}
                         onIniciarEdicao={onIniciarEdicao}
                         onCancelarEdicao={onCancelarEdicao}
+                        onMovimentar={onMovimentar}
+                        onRelatorio={onRelatorio}
                     />
                 ))}
             </tbody>

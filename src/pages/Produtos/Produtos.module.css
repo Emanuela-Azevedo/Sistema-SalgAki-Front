@@ -34,6 +34,7 @@
 }
 
 .form button,
+.formActions button,
 .btnAdicionar {
     background: linear-gradient(135deg, #c07070, #e0a080);
     color: #fff;
@@ -52,6 +53,7 @@
 }
 
 .form button:hover,
+.formActions button:hover,
 .btnAdicionar:hover {
     opacity: 0.92;
     transform: translateY(-2px);
@@ -157,4 +159,231 @@
     font-size: 0.9rem;
     width: 100%;
     min-width: 100px;
+}
+
+.topActions {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btnEstoque {
+    background: #7a9e7e !important;
+}
+
+.btnRelatorio {
+    background: #7a8fbe !important;
+}
+
+.btnEstoqueBaixo {
+    background: linear-gradient(135deg, #e0a040, #c07030);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 16px rgba(192, 112, 48, 0.25);
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.btnEstoqueBaixo:hover {
+    opacity: 0.92;
+    transform: translateY(-2px);
+}
+
+/* Modal */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    min-width: 340px;
+    max-width: 560px;
+    width: 100%;
+    box-shadow: 0 8px 40px rgba(180,80,80,0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal h2 {
+    color: #a05050;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.modalSubtitle {
+    color: #7a5c3a;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.modalForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.modalForm label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #a05050;
+}
+
+.modalForm input,
+.modalForm select {
+    padding: 0.55rem 0.8rem;
+    border: 1.5px solid #e8c8c8;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.modalForm input:focus,
+.modalForm select:focus {
+    border-color: #c07070;
+}
+
+.modalActions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+.modalActions button {
+    flex: 1;
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(135deg, #c07070, #e0a080);
+    color: #fff;
+    transition: opacity 0.2s;
+}
+
+.modalActions button:hover:not(:disabled) {
+    opacity: 0.88;
+}
+
+.modalError {
+    color: #c0392b;
+    font-size: 0.82rem;
+}
+
+/* Relatório */
+.relatorio {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-top: 1px solid #f0d0d0;
+    padding-top: 1rem;
+}
+
+.relatorioTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.relatorioTable th {
+    background: linear-gradient(135deg, #c07070, #e0a080);
+    color: #fff;
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+}
+
+.relatorioTable td {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid #f0d0d0;
+    color: #3d2020;
+}
+
+/* Estoque baixo */
+.estoqueBaixoList {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.estoqueBaixoList li {
+    background: #fff5f0;
+    border: 1px solid #f0c0a0;
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    color: #7a3020;
+    font-size: 0.92rem;
+}
+
+/* Formulário em card */
+.formCard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    background: rgba(255,255,255,0.85);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 20px rgba(180,80,80,0.1);
+}
+
+.formField {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.formField input,
+.formField select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    min-width: 140px;
+}
+
+.formActions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    padding-top: 0.1rem;
+}
+
+.inputError {
+    border-color: #c0392b !important;
+    box-shadow: 0 0 0 2px rgba(192,57,43,0.12);
+}
+
+.fieldError {
+    font-size: 0.75rem;
+    color: #c0392b;
+}
+
+.alertaEstoque {
+    background: #fff5e0;
+    border: 1px solid #f0c060;
+    color: #7a4f00;
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.88rem;
+    font-weight: 600;
 }

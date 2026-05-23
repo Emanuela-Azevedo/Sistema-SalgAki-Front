@@ -44,15 +44,16 @@
     padding: 12px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: auto; /* empurra o card para o rodapé da sidebar */
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
 }
 
 .username {
     font-weight: bold;
-    margin-bottom: 8px;
     color: #c07070;
+    font-size: 0.9rem;
 }
 
 .logoutButton {

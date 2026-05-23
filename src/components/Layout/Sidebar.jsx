@@ -10,7 +10,6 @@ export default function Sidebar() {
             <h2 className={styles.logo}>SalgAki</h2>
 
             <nav className={styles.nav}>
-                <Link to="/dashboard/home">Menu</Link>
                 <Link to="/dashboard/produtos">Produtos</Link>
                 <Link to="/dashboard/categorias">Categorias</Link>
 

@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { getCategorias, createCategoria, updateCategoria, deleteCategoria } from '../../services/categorias'
 import CategoriaForm from './components/CategoriaForm'
 import CategoriaList from './components/CategoriaList'
+import Toast from '../../components/Toast.jsx'
 import styles from './categorias.module.css'
 
 export default function Categorias() {
@@ -9,24 +10,29 @@ export default function Categorias() {
     const [nova, setNova] = useState('')
     const [editandoId, setEditandoId] = useState(null)
     const [editNome, setEditNome] = useState('')
+    const [toast, setToast] = useState(null)
+
+    const showToast = useCallback((message, type = 'success') => {
+        setToast({ message, type })
+    }, [])
 
     useEffect(() => {
-        async function carregar() {
-            const res = await getCategorias()
+        getCategorias().then(res => {
             if (res.success) setCategorias(res.data)
-        }
-        carregar()
+            else showToast(res.error || 'Erro ao carregar categorias', 'error')
+        })
     }, [])
 
     async function adicionarCategoria(e) {
         e.preventDefault()
-        if (!nova.trim()) return
+        if (!nova.trim()) return showToast('Nome da categoria é obrigatório', 'error')
         const res = await createCategoria({ nome: nova })
         if (res.success) {
             setCategorias(prev => [...prev, res.data])
             setNova('')
+            showToast('Categoria adicionada com sucesso!')
         } else {
-            alert(res.error)
+            showToast(res.error, 'error')
         }
     }
 
@@ -36,13 +42,14 @@ export default function Categorias() {
     }
 
     async function salvarEdicao(id) {
-        if (!editNome.trim()) return
+        if (!editNome.trim()) return showToast('Nome não pode ser vazio', 'error')
         const res = await updateCategoria(id, { nome: editNome })
         if (res.success) {
             setCategorias(prev => prev.map(c => c.id === id ? res.data : c))
             setEditandoId(null)
+            showToast('Categoria atualizada com sucesso!')
         } else {
-            alert(res.error)
+            showToast(res.error, 'error')
         }
     }
 
@@ -50,8 +57,9 @@ export default function Categorias() {
         const res = await deleteCategoria(id)
         if (res.success) {
             setCategorias(prev => prev.filter(c => c.id !== id))
+            showToast('Categoria excluída com sucesso!')
         } else {
-            alert(res.error)
+            showToast(res.error, 'error')
         }
     }
 
@@ -71,6 +79,10 @@ export default function Categorias() {
                 onCancelar={() => setEditandoId(null)}
                 onExcluir={excluirCategoria}
             />
+
+            {toast && (
+                <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
+            )}
         </div>
     )
 }

@@ -41,3 +41,33 @@ export async function deleteProduto(id) {
         return { success: false, error: err.response?.data ?? 'Erro ao excluir produto' }
     }
 }
+
+// Movimentar estoque (ENTRADA ou SAIDA)
+export async function movimentarEstoque(id, tipo, quantidade) {
+    try {
+        const { data } = await api.patch(`/produtos/${id}/estoque`, { tipo, quantidade })
+        return { success: true, data }
+    } catch (err) {
+        return { success: false, error: err.response?.data?.message ?? 'Erro ao movimentar estoque' }
+    }
+}
+
+// Listar produtos com estoque baixo
+export async function getEstoqueBaixo() {
+    try {
+        const { data } = await api.get('/produtos/estoque-baixo')
+        return { success: true, data }
+    } catch (err) {
+        return { success: false, error: err.response?.data ?? 'Erro ao buscar estoque baixo' }
+    }
+}
+
+// Relatório de movimentações por período
+export async function getRelatorio(id, de, ate) {
+    try {
+        const { data } = await api.get(`/produtos/${id}/movimentacoes`, { params: { de, ate } })
+        return { success: true, data }
+    } catch (err) {
+        return { success: false, error: err.response?.data ?? 'Erro ao buscar relatório' }
+    }
+}

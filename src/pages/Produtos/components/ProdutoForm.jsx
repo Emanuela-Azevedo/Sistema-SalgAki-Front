@@ -4,88 +4,99 @@ import { createProduto } from '../../../services/produtos'
 import styles from '../Produtos.module.css'
 
 export default function ProdutoForm({ onAdd, onCancel }) {
-    const [nome, setNome] = useState('')
-    const [categoriaId, setCategoriaId] = useState('')
-    const [preco, setPreco] = useState('')
-    const [quantidade, setQuantidade] = useState('')
+    const [form, setForm] = useState({ nome: '', preco: '', categoriaId: '' })
+    const [erros, setErros] = useState({})
     const [categorias, setCategorias] = useState([])
-    const [error, setError] = useState('')
+    const [apiError, setApiError] = useState('')
 
     useEffect(() => {
-        async function carregarCategorias() {
-            const res = await getCategorias()
-            if (res.success) {
-                setCategorias(res.data)
-            } else {
-                setError(res.error || 'Erro ao carregar categorias')
-            }
-        }
-        carregarCategorias()
+        getCategorias().then(res => {
+            if (res.success) setCategorias(res.data)
+            else setApiError(res.error || 'Erro ao carregar categorias')
+        })
     }, [])
+
+    function validar() {
+        const e = {}
+        if (!form.nome.trim()) e.nome = 'Nome é obrigatório'
+        if (!form.preco) e.preco = 'Preço é obrigatório'
+        else if (Number(form.preco) <= 0) e.preco = 'Preço deve ser maior que zero'
+        if (!form.categoriaId) e.categoriaId = 'Selecione uma categoria'
+        return e
+    }
+
+    function handleChange(e) {
+        const { name, value } = e.target
+        setForm(prev => ({ ...prev, [name]: value }))
+        setErros(prev => ({ ...prev, [name]: '' }))
+        setApiError('')
+    }
 
     async function handleSubmit(e) {
         e.preventDefault()
-        setError('')
+        const e2 = validar()
+        if (Object.keys(e2).length) return setErros(e2)
 
-        // validações básicas no front
-        if (!nome.trim()) return setError('Nome é obrigatório')
-        if (!preco) return setError('Preço é obrigatório')
-        if (!quantidade && quantidade !== 0) return setError('Quantidade é obrigatória')
-        if (!categoriaId) return setError('Selecione uma categoria')
+        const res = await createProduto({
+            nome: form.nome.trim(),
+            preco: Number(form.preco),
+            categoriaId: Number(form.categoriaId)
+        })
 
-        const payload = {
-            nome: nome.trim(),
-            preco: Number(preco),
-            quantidade: Number(quantidade),
-            categoriaId: Number(categoriaId)
-        }
-
-        const res = await createProduto(payload)
         if (res.success) {
             onAdd(res.data)
-            setNome('')
-            setPreco('')
-            setQuantidade('')
-            setCategoriaId('')
         } else {
-            // res.error pode ser string ou objeto de erros de validação
-            const msg = typeof res.error === 'string' ? res.error : JSON.stringify(res.error)
-            setError(msg)
+            setApiError(typeof res.error === 'string' ? res.error : JSON.stringify(res.error))
         }
     }
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit}>
-            <input
-                placeholder="Nome"
-                value={nome}
-                onChange={e => setNome(e.target.value)}
-            />
-            <input
-                type="number"
-                step="0.01"
-                placeholder="Preço"
-                value={preco}
-                onChange={e => setPreco(e.target.value)}
-            />
-            <input
-                type="number"
-                step="1"
-                min="0"
-                placeholder="Quantidade"
-                value={quantidade}
-                onChange={e => setQuantidade(e.target.value)}
-                style={{ minWidth: 'unset', width: '90px' }}
-            />
-            <select value={categoriaId} onChange={e => setCategoriaId(e.target.value)}>
-                <option value="">Selecione a categoria</option>
-                {categorias.map(cat => (
-                    <option key={cat.id} value={cat.id}>{cat.nome}</option>
-                ))}
-            </select>
-            <button type="submit">Adicionar</button>
-            <button type="button" className={styles.btnCancelar} onClick={onCancel}>Cancelar</button>
-            {error && <span style={{ color: 'red' }}>{error}</span>}
+        <form className={styles.formCard} onSubmit={handleSubmit} noValidate>
+            <div className={styles.formField}>
+                <input
+                    name="nome"
+                    placeholder="Nome"
+                    value={form.nome}
+                    onChange={handleChange}
+                    className={erros.nome ? styles.inputError : ''}
+                />
+                {erros.nome && <span className={styles.fieldError}>{erros.nome}</span>}
+            </div>
+
+            <div className={styles.formField}>
+                <input
+                    name="preco"
+                    type="number"
+                    step="0.01"
+                    placeholder="Preço"
+                    value={form.preco}
+                    onChange={handleChange}
+                    className={erros.preco ? styles.inputError : ''}
+                />
+                {erros.preco && <span className={styles.fieldError}>{erros.preco}</span>}
+            </div>
+
+            <div className={styles.formField}>
+                <select
+                    name="categoriaId"
+                    value={form.categoriaId}
+                    onChange={handleChange}
+                    className={erros.categoriaId ? styles.inputError : ''}
+                >
+                    <option value="">Selecione a categoria</option>
+                    {categorias.map(cat => (
+                        <option key={cat.id} value={cat.id}>{cat.nome}</option>
+                    ))}
+                </select>
+                {erros.categoriaId && <span className={styles.fieldError}>{erros.categoriaId}</span>}
+            </div>
+
+            <div className={styles.formActions}>
+                <button type="submit">Adicionar</button>
+                <button type="button" className={styles.btnCancelar} onClick={onCancel}>Cancelar</button>
+            </div>
+
+            {apiError && <span className={styles.fieldError}>{apiError}</span>}
         </form>
     )
 }

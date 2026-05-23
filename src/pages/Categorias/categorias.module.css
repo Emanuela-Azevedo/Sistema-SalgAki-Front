@@ -1,0 +1,113 @@
+.page {
+    padding: 2rem;
+    background: linear-gradient(160deg, #f5e6d8 0%, #f2d4d4 100%);
+    min-height: 100vh;
+    margin-left: 220px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.page h1 {
+    color: #a05050;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+/* Formulário */
+.form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    flex: 1;
+}
+
+.form button {
+    background: linear-gradient(135deg, #c07070, #e0a080);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 16px rgba(192, 112, 112, 0.25);
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.form button:hover {
+    opacity: 0.92;
+    transform: translateY(-2px);
+}
+
+/* Lista */
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.list li {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 4px 20px rgba(180, 80, 80, 0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.list li span {
+    color: #3d2020;
+    font-weight: 600;
+}
+
+.list li button {
+    background: #c07070;
+    border: none;
+    color: white;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.list li button:hover {
+    opacity: 0.92;
+    transform: translateY(-2px);
+}
+
+.actions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.btnEditar {
+    background: #e0a080 !important;
+}
+
+.btnCancelar {
+    background: #fff !important;
+    color: #a05050 !important;
+    border: 1px solid rgba(160, 80, 80, 0.35) !important;
+}
+
+.editInput {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    flex: 1;
+}

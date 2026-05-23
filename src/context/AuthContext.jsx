@@ -5,35 +5,60 @@ import { tokenStorage } from '../services/tokenStorage'
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(tokenStorage.getUser)
+    const [user, setUser] = useState(tokenStorage.getUser())
+    const [token, setToken] = useState(tokenStorage.getToken())
 
-  async function login(username, password) {
-    const { success, data, error } = await loginService(username, password)
-    if (!success) return { success, error }
+    async function login(username, password) {
+        const { success, data, error } = await loginService(username, password)
 
-    tokenStorage.setToken(data.token)
-    tokenStorage.setUser(data)
-    setUser(data)
-    return { success }
-  }
+        if (!success) return { success, error }
 
-  async function logout() {
-    await logoutService()
-    tokenStorage.clear()
-    setUser(null)
-  }
+        const usernameFromApi = data.username
 
-  const isAuthenticated = !!user
+        if (!usernameFromApi) {
+            return { success: false, error: "Username inválido" }
+        }
 
-  return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
-      {children}
-    </AuthContext.Provider>
-  )
+        // salva token
+        tokenStorage.setToken(data.token)
+        setToken(data.token)
+
+        // salva user
+        tokenStorage.setUser(usernameFromApi)
+        setUser(usernameFromApi)
+
+        return { success }
+    }
+
+    async function logout() {
+        await logoutService()
+
+        tokenStorage.clear()
+        setUser(null)
+        setToken(null)
+    }
+
+    const isAuthenticated = !!token
+
+    return (
+        <AuthContext.Provider
+            value={{
+                user,
+                token,
+                login,
+                logout,
+                isAuthenticated
+            }}
+        >
+            {children}
+        </AuthContext.Provider>
+    )
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext)
-  if (!context) throw new Error('useAuth deve ser usado dentro de AuthProvider')
-  return context
+    const context = useContext(AuthContext)
+    if (!context) {
+        throw new Error('useAuth deve ser usado dentro de AuthProvider')
+    }
+    return context
 }

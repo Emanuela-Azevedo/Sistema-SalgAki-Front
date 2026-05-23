@@ -1,14 +1,18 @@
 /**
  * @typedef {Object} LoginRequest
- * @property {string} email
- * @property {string} senha
+ * @property {string} username
+ * @property {string} password
  */
 
 /**
- * @param {string} email
- * @param {string} senha
+ * @param {string} username
+ * @param {string} password
  * @returns {LoginRequest}
  */
-export function createLoginRequest(username, senha) {
-  return { username, senha }
+export function createLoginRequest(username, password) {
+
+  return {
+    username,
+    password
+  }
 }

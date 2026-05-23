@@ -1,24 +1,17 @@
 /**
  * @typedef {Object} LoginResponse
  * @property {string} token
- * @property {string} tipo
- * @property {number} id
- * @property {string} nome
- * @property {string} email
- * @property {string} perfil
+ * @property {string} username
  */
 
 /**
- * @param {Object} data - resposta bruta da API
+ * @param {Object} data
  * @returns {LoginResponse}
  */
 export function parseLoginResponse(data) {
+
   return {
     token: data.token,
-    tipo: data.tipo ?? 'Bearer',
-    id: data.id,
-    nome: data.nome,
-    email: data.email,
-    perfil: data.perfil,
+    username: data.username
   }
 }

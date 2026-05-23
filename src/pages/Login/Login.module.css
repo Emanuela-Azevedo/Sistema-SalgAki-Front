@@ -1,128 +1,121 @@
-@keyframes bgPulse {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
 @keyframes bgShift {
-  0%   { background: linear-gradient(135deg, #f5e6d8 0%, #f2d4d4 100%); }
-  50%  { background: linear-gradient(135deg, #f2d4d4 0%, #f5e6d8 100%); }
-  100% { background: linear-gradient(135deg, #f5e6d8 0%, #f2d4d4 100%); }
+    0%   { background: linear-gradient(135deg, #f5e6d8 0%, #f2d4d4 100%); }
+    50%  { background: linear-gradient(135deg, #f2d4d4 0%, #f5e6d8 100%); }
+    100% { background: linear-gradient(135deg, #f5e6d8 0%, #f2d4d4 100%); }
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  animation: bgShift 4s ease-in-out infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    animation: bgShift 4s ease-in-out infinite;
 }
 
 .form {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 2.5rem 2rem;
-  border-radius: 20px;
-  box-shadow: 0 8px 40px rgba(180, 80, 80, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  width: 100%;
-  max-width: 380px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 2.5rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(180, 80, 80, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
 }
 
 .logo {
-  display: block;
-  margin: 0 auto 0.3rem;
-  width: 180px;
-  object-fit: contain;
+    display: block;
+    margin: 0 auto 0.3rem;
+    width: 180px;
+    object-fit: contain;
 }
 
 .divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, #e0b0b0, transparent);
-  margin: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e0b0b0, transparent);
 }
 
 .loginTitle {
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #a05050;
-  letter-spacing: 0.18em;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #a05050;
+    letter-spacing: 0.18em;
 }
 
 .field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
 }
 
 .field label {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #a05050;
-  letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #a05050;
+    letter-spacing: 0.08em;
 }
 
 .field input {
-  padding: 0.65rem 0.9rem;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1.5px solid #e8c8c8;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  color: #3d2020;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+    padding: 0.65rem 0.9rem;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1.5px solid #e8c8c8;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #3d2020;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .field input::placeholder {
-  color: #d4a8a8;
+    color: #d4a8a8;
 }
 
 .field input:focus {
-  border-color: #c07070;
-  box-shadow: 0 0 0 3px rgba(192, 112, 112, 0.15);
+    border-color: #c07070;
+    box-shadow: 0 0 0 3px rgba(192, 112, 112, 0.15);
 }
 
 .error {
-  font-size: 0.78rem;
-  color: #c0392b;
+    font-size: 0.78rem;
+    color: #c0392b;
 }
 
 .apiError {
-  font-size: 0.85rem;
-  color: #c0392b;
-  text-align: center;
+    font-size: 0.85rem;
+    color: #c0392b;
+    text-align: center;
 }
 
 .form button {
-  margin-top: 0.4rem;
-  padding: 0.75rem;
-  background: linear-gradient(135deg, #c07070, #e0a080);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.15s;
-  box-shadow: 0 4px 16px rgba(192, 112, 112, 0.35);
+    margin-top: 0.4rem;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #c07070, #e0a080);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 16px rgba(192, 112, 112, 0.35);
 }
 
 .form button:hover:not(:disabled) {
-  opacity: 0.92;
-  transform: translateY(-2px);
+    opacity: 0.92;
+    transform: translateY(-2px);
 }
 
 .form button:active:not(:disabled) {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 .form button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
 }

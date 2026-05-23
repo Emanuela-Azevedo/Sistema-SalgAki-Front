@@ -1,44 +1,11 @@
 .page {
-  min-height: 100vh;
-  background: linear-gradient(160deg, #f5ede0 0%, #ede0cc 50%, #e0cdb5 100%);
+    min-height: 100vh;
+    background: linear-gradient(160deg, #f5e6d8 0%, #f2d4d4 100%);
 }
 
 .main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem 1rem;
-}
-
-.card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 4px 24px rgba(120, 80, 30, 0.1);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  min-width: 300px;
-}
-
-.badge {
-  display: inline-block;
-  background: #e8f5e9;
-  color: #2e7d32;
-  font-size: 0.85rem;
-  font-weight: 700;
-  padding: 0.3rem 0.9rem;
-  border-radius: 20px;
-  margin: 0 auto;
-}
-
-.card h1 {
-  font-size: 1.4rem;
-  color: #3d2b1a;
-}
-
-.card p {
-  font-size: 0.95rem;
-  color: #7a5c3a;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 3rem 1rem;
 }

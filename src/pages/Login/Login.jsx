@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { login } from '../../services/authService.js'
+import { useAuth } from '../../context/AuthContext'   // 👈 usa o contexto
 import styles from './Login.module.css'
 import logo from '../../assets/logo-SalgAki.png.png'
 
-
 export default function Login() {
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const [form, setForm] = useState({ username: '', password: '' })
   const [errors, setErrors] = useState({})
@@ -33,12 +33,13 @@ export default function Login() {
     if (Object.keys(errs).length) return setErrors(errs)
 
     setLoading(true)
-    const { success, error } = await login(form.username, form.password)
+    const { success, error } = await login(form.username, form.password) // 👈 usa login do contexto
     setLoading(false)
 
     if (!success) return setApiError(error)
 
-    navigate('/dashboard/home')
+    // redireciona para a rota principal que existe
+    navigate('/dashboard')   // 👈 ajuste aqui conforme sua rota real
   }
 
   return (

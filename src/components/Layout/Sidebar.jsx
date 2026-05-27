@@ -1,9 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import styles from './Sidebar.module.css'
 
 export default function Sidebar() {
     const { user, logout } = useAuth()
+    const navigate = useNavigate()
+
+    function handleLogout() {
+        logout()
+        navigate('/login')
+    }
 
     return (
         <aside className={styles.sidebar}>
@@ -12,15 +18,8 @@ export default function Sidebar() {
             <nav className={styles.nav}>
                 <Link to="/dashboard/produtos">Produtos</Link>
                 <Link to="/dashboard/categorias">Categorias</Link>
-
+                <button className={styles.navButton} onClick={handleLogout}>Sair</button>
             </nav>
-
-            <div className={styles.userCard}>
-                <span className={styles.username}>{user}</span>
-                <button className={styles.logoutButton} onClick={logout}>
-                    Sair
-                </button>
-            </div>
         </aside>
     )
 }

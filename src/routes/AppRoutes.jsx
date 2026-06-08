@@ -21,7 +21,6 @@ export default function AppRoutes() {
             >
                 {/* 👇 rota default */}
                 <Route index element={<Navigate to="produtos" replace />} />
-
                 <Route path="home" element={<Navigate to="/dashboard/produtos" replace />} />
                 <Route path="produtos" element={<Produtos />} />
                 <Route path="categorias" element={<Categorias />} />

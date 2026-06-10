@@ -1,11 +1,20 @@
+@keyframes bgShift {
+    0%   { background: linear-gradient(135deg, #f5e6d8 0%, #f2d4d4 100%); }
+    50%  { background: linear-gradient(135deg, #f2d4d4 0%, #f5e6d8 100%); }
+    100% { background: linear-gradient(135deg, #f5e6d8 0%, #f2d4d4 100%); }
+}
+
 .page {
     min-height: 100vh;
-    background: linear-gradient(160deg, #f5e6d8 0%, #f2d4d4 100%);
+    animation: bgShift 4s ease-in-out infinite;
 }
 
 .main {
+    margin-left: 16px;
+    min-height: 100vh;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
-    padding: 3rem 1rem;
+    padding: 3rem 2rem;
+    transition: margin-left 0.3s ease;
 }

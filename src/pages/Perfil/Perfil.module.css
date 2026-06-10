@@ -1,0 +1,42 @@
+.page {
+    padding: 2rem;
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    flex-direction: column;
+}
+
+.page h1 {
+    color: #a05050;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(180, 80, 80, 0.12);
+    width: fit-content;
+    min-width: 280px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #a05050;
+    letter-spacing: 0.08em;
+}
+
+.value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #3d2020;
+}

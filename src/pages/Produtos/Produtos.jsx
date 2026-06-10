@@ -1,8 +1,9 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { getProdutos, updateProduto, deleteProduto } from '../../services/produtos'
 import { getCategorias } from '../../services/categorias'
 import ProdutoForm from './components/ProdutoForm.jsx'
 import ProdutoList from './components/ProdutoList.jsx'
+import ProdutoFilters from './components/ProdutoFilters.jsx'
 import MovimentacaoModal from './components/MovimentacaoModal.jsx'
 import RelatorioModal from './components/RelatorioModal.jsx'
 import Toast from '../../components/Toast.jsx'
@@ -18,6 +19,18 @@ export default function Produtos() {
     const [movimentandoProduto, setMovimentandoProduto] = useState(null)
     const [relatorioProduto, setRelatorioProduto] = useState(null)
     const [toast, setToast] = useState(null)
+    const [filtro, setFiltro] = useState({ busca: '', ordenacao: '' })
+
+    const produtosFiltrados = useMemo(() => {
+        let lista = [...produtos]
+        if (filtro.busca)
+            lista = lista.filter(p => p.nome.toLowerCase().includes(filtro.busca.toLowerCase()))
+        if (filtro.ordenacao === 'asc') lista.sort((a, b) => a.nome.localeCompare(b.nome))
+        else if (filtro.ordenacao === 'desc') lista.sort((a, b) => b.nome.localeCompare(a.nome))
+        else if (filtro.ordenacao === 'precoAsc') lista.sort((a, b) => a.preco - b.preco)
+        else if (filtro.ordenacao === 'precoDesc') lista.sort((a, b) => b.preco - a.preco)
+        return lista
+    }, [produtos, filtro])
 
     const showToast = useCallback((message, type = 'success') => {
         setToast({ message, type })
@@ -40,7 +53,11 @@ export default function Produtos() {
     }
 
     function handleAddProduto(novoProduto) {
-        setProdutos(prev => [novoProduto, ...prev])
+        if (!novoProduto) {
+            carregarProdutos()
+        } else {
+            setProdutos(prev => [novoProduto, ...prev])
+        }
         setShowForm(false)
         showToast('Produto adicionado com sucesso!')
     }
@@ -117,10 +134,14 @@ export default function Produtos() {
             <div className={styles.topActions}>
                 {!showForm && (
                     <button className={styles.btnAdicionar} onClick={() => setShowForm(true)}>
-                        Adicionar Produto
+                        + Adicionar Produto
                     </button>
                 )}
             </div>
+
+            {!showForm && (
+                <ProdutoFilters filtro={filtro} setFiltro={setFiltro} produtos={produtos} />
+            )}
 
             {showForm ? (
                 <ProdutoForm onAdd={handleAddProduto} onCancel={() => setShowForm(false)} />
@@ -130,7 +151,7 @@ export default function Produtos() {
                     {!loading && produtos.length === 0 && <div>Nenhum produto encontrado.</div>}
 
                     <ProdutoList
-                        produtos={produtos}
+                        produtos={produtosFiltrados}
                         categorias={categorias}
                         onEdit={salvarEdicao}
                         onDelete={excluirProduto}

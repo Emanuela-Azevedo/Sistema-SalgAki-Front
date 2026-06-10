@@ -4,6 +4,8 @@ import Dashboard from '../pages/Dashboard/Dashboard.jsx'
 import PrivateRoute from './PrivateRoute'
 import Produtos from '../pages/Produtos/Produtos'
 import Categorias from '../pages/Categorias/Categorias'
+import Cardapio from '../pages/Cardapio/Cardapio'
+import Perfil from '../pages/Perfil/Perfil'
 
 export default function AppRoutes() {
     return (
@@ -24,6 +26,8 @@ export default function AppRoutes() {
                 <Route path="home" element={<Navigate to="/dashboard/produtos" replace />} />
                 <Route path="produtos" element={<Produtos />} />
                 <Route path="categorias" element={<Categorias />} />
+                <Route path="cardapio" element={<Cardapio />} />
+                <Route path="perfil" element={<Perfil />} />
             </Route>
         </Routes>
     )

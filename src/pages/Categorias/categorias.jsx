@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { getCategorias, createCategoria, updateCategoria, deleteCategoria } from '../../services/categorias'
 import CategoriaForm from './components/CategoriaForm'
 import CategoriaList from './components/CategoriaList'
@@ -11,6 +11,15 @@ export default function Categorias() {
     const [editandoId, setEditandoId] = useState(null)
     const [editNome, setEditNome] = useState('')
     const [toast, setToast] = useState(null)
+    const [filtro, setFiltro] = useState({ busca: '', ordenacao: '' })
+
+    const categoriasFiltradas = useMemo(() => {
+        let lista = [...categorias]
+        if (filtro.busca) lista = lista.filter(c => c.nome.toLowerCase().includes(filtro.busca.toLowerCase()))
+        if (filtro.ordenacao === 'asc') lista.sort((a, b) => a.nome.localeCompare(b.nome))
+        else if (filtro.ordenacao === 'desc') lista.sort((a, b) => b.nome.localeCompare(a.nome))
+        return lista
+    }, [categorias, filtro])
 
     const showToast = useCallback((message, type = 'success') => {
         setToast({ message, type })
@@ -69,8 +78,26 @@ export default function Categorias() {
 
             <CategoriaForm nova={nova} setNova={setNova} onSubmit={adicionarCategoria} />
 
+            <div className={styles.filters}>
+                <input
+                    className={styles.filterInput}
+                    placeholder="🔍 Buscar categoria..."
+                    value={filtro.busca}
+                    onChange={e => setFiltro({ ...filtro, busca: e.target.value })}
+                />
+                <select
+                    className={styles.filterSelect}
+                    value={filtro.ordenacao}
+                    onChange={e => setFiltro({ ...filtro, ordenacao: e.target.value })}
+                >
+                    <option value="">Ordenar por...</option>
+                    <option value="asc">A → Z</option>
+                    <option value="desc">Z → A</option>
+                </select>
+            </div>
+
             <CategoriaList
-                categorias={categorias}
+                categorias={categoriasFiltradas}
                 editandoId={editandoId}
                 editNome={editNome}
                 setEditNome={setEditNome}

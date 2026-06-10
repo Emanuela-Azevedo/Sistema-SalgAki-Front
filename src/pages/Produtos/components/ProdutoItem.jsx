@@ -33,10 +33,10 @@ export default function ProdutoItem({ produto, categorias, onEdit, onDelete, edi
             <td>{categoriaNome}</td>
             <td>
                 <div className={styles.actions}>
-                    <button className={styles.btnEditar} onClick={() => onIniciarEdicao(produto)}>Editar</button>
-                    <button className={styles.btnEstoque} onClick={() => onMovimentar(produto)}>Estoque</button>
-                    <button className={styles.btnRelatorio} onClick={() => onRelatorio(produto)}>Relatório</button>
-                    <button onClick={() => onDelete(produto.id)}>Excluir</button>
+                    <button className={styles.btnEditar} onClick={() => onIniciarEdicao(produto)} title="Editar">✏️</button>
+                    <button className={styles.btnEstoque} onClick={() => onMovimentar(produto)} title="Estoque">📦</button>
+                    <button className={styles.btnRelatorio} onClick={() => onRelatorio(produto)} title="Relatório">📊</button>
+                    <button onClick={() => onDelete(produto.id)} title="Excluir">🗑️</button>
                 </div>
             </td>
         </tr>

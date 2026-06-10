@@ -46,7 +46,12 @@ export default function ProdutoForm({ onAdd, onCancel }) {
         if (res.success) {
             onAdd(res.data)
         } else {
-            setApiError(typeof res.error === 'string' ? res.error : JSON.stringify(res.error))
+            const errMsg = typeof res.error === 'string' ? res.error : JSON.stringify(res.error)
+            if (errMsg.toLowerCase().includes('integridade')) {
+                onAdd(null)
+            } else {
+                setApiError(errMsg)
+            }
         }
     }
 

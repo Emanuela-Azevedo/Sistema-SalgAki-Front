@@ -1,0 +1,125 @@
+.page {
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.page h1 {
+    color: #a05050;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 40px rgba(180, 80, 80, 0.13);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+.icon {
+    font-size: 2.5rem;
+}
+
+.titulo {
+    color: #a05050;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.descricao {
+    color: #7a5c5c;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-align: left;
+}
+
+.label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #a05050;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.input {
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    border: 1.5px solid #e8c8c8;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: rgba(255, 255, 255, 0.9);
+    width: 100%;
+}
+
+.input:focus {
+    border-color: #c07070;
+    box-shadow: 0 0 0 3px rgba(192, 112, 112, 0.12);
+}
+
+.inputError {
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    border: 1.5px solid #e05050;
+    font-size: 0.95rem;
+    outline: none;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.erro {
+    font-size: 0.75rem;
+    color: #c0392b;
+}
+
+.btn {
+    padding: 0.7rem;
+    width: 100%;
+    background: linear-gradient(135deg, #c07070, #e0a080);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 16px rgba(192, 112, 112, 0.25);
+}
+
+.btn:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

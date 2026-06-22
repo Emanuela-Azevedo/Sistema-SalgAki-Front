@@ -20,7 +20,7 @@ export default function ProdutoForm({ onAdd, onCancel }) {
         const e = {}
         if (!form.nome.trim()) e.nome = 'Nome é obrigatório'
         if (!form.preco) e.preco = 'Preço é obrigatório'
-        else if (Number(form.preco) <= 0) e.preco = 'Preço deve ser maior que zero'
+        else if (Number(form.preco) < 0) e.preco = 'Preço não pode ser negativo'
         if (!form.categoriaId) e.categoriaId = 'Selecione uma categoria'
         return e
     }
@@ -46,7 +46,8 @@ export default function ProdutoForm({ onAdd, onCancel }) {
         if (res.success) {
             onAdd(res.data)
         } else {
-            setApiError(typeof res.error === 'string' ? res.error : JSON.stringify(res.error))
+            const errMsg = typeof res.error === 'string' ? res.error : JSON.stringify(res.error)
+            setApiError(errMsg)
         }
     }
 
@@ -68,6 +69,7 @@ export default function ProdutoForm({ onAdd, onCancel }) {
                     name="preco"
                     type="number"
                     step="0.01"
+                    min="0"
                     placeholder="Preço"
                     value={form.preco}
                     onChange={handleChange}
@@ -95,6 +97,8 @@ export default function ProdutoForm({ onAdd, onCancel }) {
                 <button type="submit">Adicionar</button>
                 <button type="button" className={styles.btnCancelar} onClick={onCancel}>Cancelar</button>
             </div>
+
+            <span className={styles.fieldInfo}>💡 A data de validade é definida ao movimentar o estoque.</span>
 
             {apiError && <span className={styles.fieldError}>{apiError}</span>}
         </form>

@@ -1,12 +1,10 @@
 .page {
     padding: 2rem;
-    background: linear-gradient(160deg, #f5e6d8 0%, #f2d4d4 100%);
-    min-height: 100vh;
-    margin-left: 220px;
+    width: 100%;
+    max-width: 960px;
     text-align: left;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
 }
 
 .page h1 {
@@ -14,6 +12,43 @@
     margin-bottom: 1.5rem;
     font-weight: 700;
     letter-spacing: 0.12em;
+}
+
+.filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 50px;
+    padding: 0.4rem 0.75rem;
+    box-shadow: 0 2px 12px rgba(180, 80, 80, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    width: fit-content;
+}
+
+.filterInput {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.88rem;
+    color: #3d2020;
+    width: 180px;
+}
+
+.filterInput::placeholder {
+    color: #d4a8a8;
+}
+
+.filterSelect {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.88rem;
+    color: #a05050;
+    cursor: pointer;
+    border-left: 1px solid #e8c8c8;
+    padding-left: 0.5rem;
 }
 
 /* Formulário */
@@ -131,10 +166,11 @@
     background: #c07070;
     border: none;
     color: white;
-    padding: 0.4rem 0.7rem;
+    padding: 0.3rem 0.5rem;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
     transition: opacity 0.2s, transform 0.15s;
 }
 
@@ -376,6 +412,13 @@
 .fieldError {
     font-size: 0.75rem;
     color: #c0392b;
+}
+
+.fieldInfo {
+    font-size: 0.78rem;
+    color: #a05050;
+    opacity: 0.8;
+    font-style: italic;
 }
 
 .alertaEstoque {

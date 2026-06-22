@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { movimentarEstoque } from '../../../services/produtos'
+import { entradaEstoque, saidaEstoque } from '../../../services/estoque'
 import styles from './Tela.module.css'
 
 export default function MovimentacaoModal({ produto, onClose, onSuccess }) {
     const [tipo, setTipo] = useState('ENTRADA')
     const [quantidade, setQuantidade] = useState('')
+    const [dataValidade, setDataValidade] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
@@ -14,7 +15,9 @@ export default function MovimentacaoModal({ produto, onClose, onSuccess }) {
         if (Number(quantidade) <= 0) return setError('Quantidade deve ser maior que zero')
 
         setLoading(true)
-        const res = await movimentarEstoque(produto.id, tipo, Number(quantidade))
+        const res = tipo === 'ENTRADA'
+            ? await entradaEstoque(produto.id, Number(quantidade), dataValidade || null)
+            : await saidaEstoque(produto.id, Number(quantidade))
         setLoading(false)
 
         if (res.success) {
@@ -53,6 +56,15 @@ export default function MovimentacaoModal({ produto, onClose, onSuccess }) {
                             className={error ? styles.inputError : ''}
                         />
                     </label>
+                    {tipo === 'ENTRADA' && (
+                        <label>Data de Validade
+                            <input
+                                type="date"
+                                value={dataValidade}
+                                onChange={e => setDataValidade(e.target.value)}
+                            />
+                        </label>
+                    )}
                     {error && <span className={styles.erro}>{error}</span>}
                     <div className={styles.acoes}>
                         <button type="submit" className={styles.btnConfirmar} disabled={loading}>

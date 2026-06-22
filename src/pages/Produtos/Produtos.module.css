@@ -414,6 +414,13 @@
     color: #c0392b;
 }
 
+.fieldInfo {
+    font-size: 0.78rem;
+    color: #a05050;
+    opacity: 0.8;
+    font-style: italic;
+}
+
 .alertaEstoque {
     background: #fff5e0;
     border: 1px solid #f0c060;

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import styles from './Sidebar.module.css'
@@ -6,6 +7,7 @@ import logo from '../../assets/logo-SalgAki.png.png'
 export default function Sidebar() {
     const { user, logout } = useAuth()
     const navigate = useNavigate()
+    const [aberta, setAberta] = useState(false)
 
     function handleLogout() {
         logout()
@@ -13,7 +15,11 @@ export default function Sidebar() {
     }
 
     return (
-        <aside className={styles.sidebar}>
+        <aside className={`${styles.sidebar} ${aberta ? styles.aberta : ''}`}>
+            <button className={styles.btnToggle} onClick={() => setAberta(a => !a)}>
+                {aberta ? '◀' : '▶'}
+            </button>
+
             <img src={logo} alt="SalgAki" className={styles.logo} />
 
             <nav className={styles.nav}>

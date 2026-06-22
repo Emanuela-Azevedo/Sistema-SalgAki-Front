@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { getRelatorio } from '../../../services/produtos'
+import { getRelatorioMovimentacoes } from '../../../services/movimentacaoEstoque'
 import styles from './Tela.module.css'
 
 export default function RelatorioModal({ produto, onClose }) {
@@ -14,7 +14,7 @@ export default function RelatorioModal({ produto, onClose }) {
         if (!de || !ate) return setError('Preencha as duas datas')
         setLoading(true)
         setError('')
-        const res = await getRelatorio(produto.id, new Date(de).toISOString(), new Date(ate).toISOString())
+        const res = await getRelatorioMovimentacoes(produto.id, new Date(de).toISOString(), new Date(ate).toISOString())
         setLoading(false)
         if (res.success) setRelatorio(res.data)
         else setError(typeof res.error === 'string' ? res.error : JSON.stringify(res.error))

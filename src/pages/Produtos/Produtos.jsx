@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { getProdutos, updateProduto, deleteProduto } from '../../services/produtos'
+import { getEstoque } from '../../services/estoque'
 import { getCategorias } from '../../services/categorias'
 import ProdutoForm from './components/ProdutoForm.jsx'
 import ProdutoList from './components/ProdutoList.jsx'
@@ -45,7 +46,15 @@ export default function Produtos() {
         setLoading(true)
         const res = await getProdutos()
         if (res.success) {
-            setProdutos(res.data)
+            const comEstoque = await Promise.all(
+                res.data.map(async p => {
+                    const est = await getEstoque(p.id)
+                    return est.success
+                        ? { ...p, quantidade: est.data.quantidade, dataValidade: est.data.dataValidade }
+                        : { ...p, quantidade: 0, dataValidade: null }
+                })
+            )
+            setProdutos(comEstoque)
         } else {
             showToast(res.error || 'Erro ao carregar produtos', 'error')
         }
@@ -68,8 +77,7 @@ export default function Produtos() {
         setEditForm({
             nome: p.nome,
             preco: p.preco,
-            categoriaId: typeof p.categoria === 'object' ? p.categoria.id : p.categoriaId,
-            dataValidade: p.dataValidade || ''
+            categoriaId: typeof p.categoria === 'object' ? p.categoria.id : p.categoriaId
         })
     }
 
@@ -86,15 +94,10 @@ export default function Produtos() {
             return showToast('Selecione uma categoria', 'error')
         }
 
-        if (!editForm.dataValidade) {
-            return showToast('Data de validade é obrigatória', 'error')
-        }
-
         const res = await updateProduto(id, {
             nome: editForm.nome.trim(),
             preco: Number(editForm.preco),
-            categoriaId: Number(editForm.categoriaId),
-            dataValidade: editForm.dataValidade
+            categoriaId: Number(editForm.categoriaId)
         })
         if (res.success) {
             setProdutos(prev => prev.map(p => p.id === id ? res.data : p))

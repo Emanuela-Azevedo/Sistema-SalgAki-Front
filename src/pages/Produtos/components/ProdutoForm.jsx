@@ -4,7 +4,7 @@ import { createProduto } from '../../../services/produtos'
 import styles from '../Produtos.module.css'
 
 export default function ProdutoForm({ onAdd, onCancel }) {
-    const [form, setForm] = useState({ nome: '', preco: '', categoriaId: '', dataValidade: '' })
+    const [form, setForm] = useState({ nome: '', preco: '', categoriaId: '' })
     const [erros, setErros] = useState({})
     const [categorias, setCategorias] = useState([])
     const [apiError, setApiError] = useState('')
@@ -22,7 +22,6 @@ export default function ProdutoForm({ onAdd, onCancel }) {
         if (!form.preco) e.preco = 'Preço é obrigatório'
         else if (Number(form.preco) < 0) e.preco = 'Preço não pode ser negativo'
         if (!form.categoriaId) e.categoriaId = 'Selecione uma categoria'
-        if (!form.dataValidade) e.dataValidade = 'Data de validade é obrigatória'
         return e
     }
 
@@ -41,8 +40,7 @@ export default function ProdutoForm({ onAdd, onCancel }) {
         const res = await createProduto({
             nome: form.nome.trim(),
             preco: Number(form.preco),
-            categoriaId: Number(form.categoriaId),
-            dataValidade: form.dataValidade
+            categoriaId: Number(form.categoriaId)
         })
 
         if (res.success) {
@@ -95,21 +93,12 @@ export default function ProdutoForm({ onAdd, onCancel }) {
                 {erros.categoriaId && <span className={styles.fieldError}>{erros.categoriaId}</span>}
             </div>
 
-            <div className={styles.formField}>
-                <input
-                    name="dataValidade"
-                    type="date"
-                    value={form.dataValidade}
-                    onChange={handleChange}
-                    className={erros.dataValidade ? styles.inputError : ''}
-                />
-                {erros.dataValidade && <span className={styles.fieldError}>{erros.dataValidade}</span>}
-            </div>
-
             <div className={styles.formActions}>
                 <button type="submit">Adicionar</button>
                 <button type="button" className={styles.btnCancelar} onClick={onCancel}>Cancelar</button>
             </div>
+
+            <span className={styles.fieldInfo}>💡 A data de validade é definida ao movimentar o estoque.</span>
 
             {apiError && <span className={styles.fieldError}>{apiError}</span>}
         </form>

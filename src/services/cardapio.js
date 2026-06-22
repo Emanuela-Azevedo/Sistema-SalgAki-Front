@@ -14,17 +14,11 @@ function getErrorMessage(err, fallback) {
     return data?.message || data?.error || data?.errors || fallback
 }
 
-// Gerar e baixar o PDF do cardápio
-export async function getCardapioPdf() {
+export async function enviarCardapioWhatsApp(numeroWhatsApp) {
     try {
-        const response = await api.get('/cardapio/pdf', {
-            responseType: 'blob' // importante para receber o PDF como arquivo binário
-        })
-
-        // cria um objeto URL para o PDF
-        const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
-        return { success: true, url }
+        const { data } = await api.post('/cardapio/enviar-whatsapp', { numeroWhatsApp })
+        return { success: true, data }
     } catch (err) {
-        return { success: false, error: getErrorMessage(err, 'Erro ao gerar PDF do cardápio') }
+        return { success: false, error: getErrorMessage(err, 'Erro ao enviar cardápio') }
     }
 }

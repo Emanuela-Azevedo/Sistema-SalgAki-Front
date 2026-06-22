@@ -16,14 +16,7 @@ export default function ProdutoItem({ produto, categorias, onEdit, onDelete, edi
                         {categorias.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}
                     </select>
                 </td>
-                <td>
-                    <input
-                        className={styles.editInput}
-                        type="date"
-                        value={editForm.dataValidade}
-                        onChange={e => setEditForm(f => ({ ...f, dataValidade: e.target.value }))}
-                    />
-                </td>
+                <td>{produto.dataValidade ? new Date(`${produto.dataValidade}T00:00:00`).toLocaleDateString('pt-BR') : '-'}</td>
                 <td>
                     <div className={styles.actions}>
                         <button onClick={() => onEdit(produto.id)}>Salvar</button>
@@ -38,7 +31,7 @@ export default function ProdutoItem({ produto, categorias, onEdit, onDelete, edi
         <tr>
             <td>{produto.nome}</td>
             <td>R$ {produto.preco}</td>
-            <td>{produto.quantidade}</td>
+            <td>{produto.quantidade ?? '-'}</td>
             <td>{categoriaNome}</td>
             <td>{produto.dataValidade ? new Date(`${produto.dataValidade}T00:00:00`).toLocaleDateString('pt-BR') : '-'}</td>
             <td>

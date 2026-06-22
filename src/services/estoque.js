@@ -35,11 +35,11 @@ export async function getEstoque(produtoId) {
 }
 
 // Adicionar entrada de estoque
-export async function entradaEstoque(produtoId, quantidade) {
+export async function entradaEstoque(produtoId, quantidade, dataValidade) {
     try {
-        const { data } = await api.put(`/estoques/${produtoId}/entrada`, null, {
-            params: { quantidade }
-        })
+        const params = { quantidade }
+        if (dataValidade) params.dataValidade = dataValidade
+        const { data } = await api.put(`/estoques/${produtoId}/entrada`, null, { params })
         return { success: true, data }
     } catch (err) {
         return { success: false, error: getErrorMessage(err, 'Erro ao adicionar entrada de estoque') }

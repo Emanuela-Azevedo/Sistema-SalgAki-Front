@@ -15,21 +15,32 @@ function getErrorMessage(err, fallback) {
 }
 
 // Buscar todos os produtos
-export async function getProdutos() {
+export async function getProdutos(params = {}) {
     try {
-        const { data } = await api.get('/produtos')
+        const { data } = await api.get('/produtos', { params })
         return { success: true, data }
     } catch (err) {
         return { success: false, error: getErrorMessage(err, 'Erro ao buscar produtos') }
     }
 }
 
+// Criar produto
 export async function createProduto(produto) {
     try {
-        const res = await api.post('/produtos', produto)
-        return { success: true, data: res.data }
+        const { data } = await api.post('/produtos', produto)
+        return { success: true, data }
     } catch (err) {
         return { success: false, error: getErrorMessage(err, 'Erro ao criar produto') }
+    }
+}
+
+// Buscar produto por ID
+export async function getProdutoById(id) {
+    try {
+        const { data } = await api.get(`/produtos/${id}`)
+        return { success: true, data }
+    } catch (err) {
+        return { success: false, error: getErrorMessage(err, 'Erro ao buscar produto') }
     }
 }
 
@@ -50,43 +61,5 @@ export async function deleteProduto(id) {
         return { success: true }
     } catch (err) {
         return { success: false, error: getErrorMessage(err, 'Erro ao excluir produto') }
-    }
-}
-
-// Movimentar estoque (ENTRADA ou SAIDA)
-export async function movimentarEstoque(id, tipo, quantidade) {
-    try {
-        let url
-        if (tipo === 'ENTRADA') {
-            url = `/produtos/${id}/entrada?quantidade=${quantidade}`
-        } else if (tipo === 'SAIDA') {
-            url = `/produtos/${id}/saida?quantidade=${quantidade}`
-        }
-
-        const { data } = await api.put(url)
-        return { success: true, data }
-    } catch (err) {
-        return { success: false, error: getErrorMessage(err, 'Erro ao movimentar estoque') }
-    }
-}
-
-
-// Listar produtos com estoque baixo
-export async function getEstoqueBaixo() {
-    try {
-        const { data } = await api.get('/produtos/estoque-baixo')
-        return { success: true, data }
-    } catch (err) {
-        return { success: false, error: getErrorMessage(err, 'Erro ao buscar estoque baixo') }
-    }
-}
-
-// Relatório de movimentações por período
-export async function getRelatorio(id, de, ate) {
-    try {
-        const { data } = await api.get(`/movimentacoes/${id}/relatorio`, { params: { de, ate } })
-        return { success: true, data }
-    } catch (err) {
-        return { success: false, error: getErrorMessage(err, 'Erro ao buscar relatório') }
     }
 }

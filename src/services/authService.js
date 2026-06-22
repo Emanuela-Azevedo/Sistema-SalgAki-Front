@@ -4,8 +4,8 @@ import api from './api'
 export async function login(username, password) {
   try {
     const { data } = await api.post('/auth/login', { username, password })
-    console.log('Resposta do login:', data) // 👈 debug
-
+    tokenStorage.setToken(data.token)
+    tokenStorage.setUser(data.username)
     return { success: true, data }
   } catch (err) {
     const error = err.response?.data ?? 'Usuário ou senha inválidos'

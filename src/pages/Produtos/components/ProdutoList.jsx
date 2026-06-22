@@ -5,31 +5,32 @@ export default function ProdutoList({ produtos, categorias, onEdit, onDelete, ed
     return (
         <table className={styles.table}>
             <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Preço</th>
-                    <th style={{ textAlign: 'center' }}>Quantidade</th>
-                    <th>Categoria</th>
-                    <th>Ações</th>
-                </tr>
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th style={{ textAlign: 'center' }}>Quantidade</th>
+                <th>Categoria</th>
+                <th>Validade</th>
+                <th>Ações</th>
+            </tr>
             </thead>
             <tbody>
-                {produtos.map(p => (
-                    <ProdutoItem
-                        key={p.id}
-                        produto={p}
-                        categorias={categorias}
-                        onEdit={onEdit}
-                        onDelete={onDelete}
-                        editandoId={editandoId}
-                        editForm={editForm}
-                        setEditForm={setEditForm}
-                        onIniciarEdicao={onIniciarEdicao}
-                        onCancelarEdicao={onCancelarEdicao}
-                        onMovimentar={onMovimentar}
-                        onRelatorio={onRelatorio}
-                    />
-                ))}
+            {produtos.map(p => (
+                <ProdutoItem
+                    key={p.id}
+                    produto={p}
+                    categorias={categorias}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                    editandoId={editandoId}
+                    editForm={editForm}
+                    setEditForm={setEditForm}
+                    onIniciarEdicao={onIniciarEdicao}
+                    onCancelarEdicao={onCancelarEdicao}
+                    onMovimentar={onMovimentar}
+                    onRelatorio={onRelatorio}
+                />
+            ))}
             </tbody>
         </table>
     )

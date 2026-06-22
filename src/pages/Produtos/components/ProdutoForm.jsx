@@ -4,7 +4,7 @@ import { createProduto } from '../../../services/produtos'
 import styles from '../Produtos.module.css'
 
 export default function ProdutoForm({ onAdd, onCancel }) {
-    const [form, setForm] = useState({ nome: '', preco: '', categoriaId: '' })
+    const [form, setForm] = useState({ nome: '', preco: '', categoriaId: '', dataValidade: '' })
     const [erros, setErros] = useState({})
     const [categorias, setCategorias] = useState([])
     const [apiError, setApiError] = useState('')
@@ -20,8 +20,9 @@ export default function ProdutoForm({ onAdd, onCancel }) {
         const e = {}
         if (!form.nome.trim()) e.nome = 'Nome é obrigatório'
         if (!form.preco) e.preco = 'Preço é obrigatório'
-        else if (Number(form.preco) <= 0) e.preco = 'Preço deve ser maior que zero'
+        else if (Number(form.preco) < 0) e.preco = 'Preço não pode ser negativo'
         if (!form.categoriaId) e.categoriaId = 'Selecione uma categoria'
+        if (!form.dataValidade) e.dataValidade = 'Data de validade é obrigatória'
         return e
     }
 
@@ -40,18 +41,15 @@ export default function ProdutoForm({ onAdd, onCancel }) {
         const res = await createProduto({
             nome: form.nome.trim(),
             preco: Number(form.preco),
-            categoriaId: Number(form.categoriaId)
+            categoriaId: Number(form.categoriaId),
+            dataValidade: form.dataValidade
         })
 
         if (res.success) {
             onAdd(res.data)
         } else {
             const errMsg = typeof res.error === 'string' ? res.error : JSON.stringify(res.error)
-            if (errMsg.toLowerCase().includes('integridade')) {
-                onAdd(null)
-            } else {
-                setApiError(errMsg)
-            }
+            setApiError(errMsg)
         }
     }
 
@@ -73,6 +71,7 @@ export default function ProdutoForm({ onAdd, onCancel }) {
                     name="preco"
                     type="number"
                     step="0.01"
+                    min="0"
                     placeholder="Preço"
                     value={form.preco}
                     onChange={handleChange}
@@ -94,6 +93,17 @@ export default function ProdutoForm({ onAdd, onCancel }) {
                     ))}
                 </select>
                 {erros.categoriaId && <span className={styles.fieldError}>{erros.categoriaId}</span>}
+            </div>
+
+            <div className={styles.formField}>
+                <input
+                    name="dataValidade"
+                    type="date"
+                    value={form.dataValidade}
+                    onChange={handleChange}
+                    className={erros.dataValidade ? styles.inputError : ''}
+                />
+                {erros.dataValidade && <span className={styles.fieldError}>{erros.dataValidade}</span>}
             </div>
 
             <div className={styles.formActions}>

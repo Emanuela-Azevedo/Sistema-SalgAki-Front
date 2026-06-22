@@ -53,11 +53,7 @@ export default function Produtos() {
     }
 
     function handleAddProduto(novoProduto) {
-        if (!novoProduto) {
-            carregarProdutos()
-        } else {
-            setProdutos(prev => [novoProduto, ...prev])
-        }
+        carregarProdutos()
         setShowForm(false)
         showToast('Produto adicionado com sucesso!')
     }
@@ -72,15 +68,33 @@ export default function Produtos() {
         setEditForm({
             nome: p.nome,
             preco: p.preco,
-            categoriaId: typeof p.categoria === 'object' ? p.categoria.id : p.categoriaId
+            categoriaId: typeof p.categoria === 'object' ? p.categoria.id : p.categoriaId,
+            dataValidade: p.dataValidade || ''
         })
     }
 
     async function salvarEdicao(id) {
+        if (!editForm.nome?.trim()) {
+            return showToast('Nome é obrigatório', 'error')
+        }
+
+        if (Number(editForm.preco) < 0) {
+            return showToast('Preço não pode ser negativo', 'error')
+        }
+
+        if (!editForm.categoriaId) {
+            return showToast('Selecione uma categoria', 'error')
+        }
+
+        if (!editForm.dataValidade) {
+            return showToast('Data de validade é obrigatória', 'error')
+        }
+
         const res = await updateProduto(id, {
-            nome: editForm.nome,
+            nome: editForm.nome.trim(),
             preco: Number(editForm.preco),
-            categoriaId: Number(editForm.categoriaId)
+            categoriaId: Number(editForm.categoriaId),
+            dataValidade: editForm.dataValidade
         })
         if (res.success) {
             setProdutos(prev => prev.map(p => p.id === id ? res.data : p))

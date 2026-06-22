@@ -1,5 +1,6 @@
 import styles from '../Produtos.module.css'
 
+
 export default function ProdutoItem({ produto, categorias, onEdit, onDelete, editandoId, editForm, setEditForm, onIniciarEdicao, onCancelarEdicao, onMovimentar, onRelatorio }) {
     const editando = editandoId === produto.id
     const categoriaNome = typeof produto.categoria === 'object' ? produto.categoria?.nome : produto.categoriaNome ?? produto.categoria
@@ -8,12 +9,20 @@ export default function ProdutoItem({ produto, categorias, onEdit, onDelete, edi
         return (
             <tr>
                 <td><input className={styles.editInput} value={editForm.nome} onChange={e => setEditForm(f => ({ ...f, nome: e.target.value }))} /></td>
-                <td><input className={styles.editInput} type="number" step="0.01" value={editForm.preco} onChange={e => setEditForm(f => ({ ...f, preco: e.target.value }))} /></td>
+                <td><input className={styles.editInput} type="number" step="0.01" min="0" value={editForm.preco} onChange={e => setEditForm(f => ({ ...f, preco: e.target.value }))} /></td>
                 <td style={{ textAlign: 'center' }}>{produto.quantidade}</td>
                 <td>
                     <select className={styles.editInput} value={editForm.categoriaId} onChange={e => setEditForm(f => ({ ...f, categoriaId: e.target.value }))}>
                         {categorias.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}
                     </select>
+                </td>
+                <td>
+                    <input
+                        className={styles.editInput}
+                        type="date"
+                        value={editForm.dataValidade}
+                        onChange={e => setEditForm(f => ({ ...f, dataValidade: e.target.value }))}
+                    />
                 </td>
                 <td>
                     <div className={styles.actions}>
@@ -31,6 +40,7 @@ export default function ProdutoItem({ produto, categorias, onEdit, onDelete, edi
             <td>R$ {produto.preco}</td>
             <td>{produto.quantidade}</td>
             <td>{categoriaNome}</td>
+            <td>{produto.dataValidade ? new Date(`${produto.dataValidade}T00:00:00`).toLocaleDateString('pt-BR') : '-'}</td>
             <td>
                 <div className={styles.actions}>
                     <button className={styles.btnEditar} onClick={() => onIniciarEdicao(produto)} title="Editar">✏️</button>

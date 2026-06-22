@@ -1,12 +1,22 @@
 import api from './api'
 
+function getErrorMessage(err, fallback) {
+    const data = err.response?.data
+
+    if (typeof data === 'string') {
+        return data
+    }
+
+    return data?.message || data?.error || fallback
+}
+
 // Listar todas as categorias
 export async function getCategorias() {
     try {
         const res = await api.get('/categorias')
         return { success: true, data: res.data }
     } catch (err) {
-        return { success: false, error: err.response?.data?.message || 'Erro ao listar categorias' }
+        return { success: false, error: getErrorMessage(err, 'Erro ao listar categorias') }
     }
 }
 
@@ -16,7 +26,7 @@ export async function createCategoria(categoria) {
         const res = await api.post('/categorias', categoria)
         return { success: true, data: res.data }
     } catch (err) {
-        return { success: false, error: err.response?.data?.message || 'Erro ao criar categoria' }
+        return { success: false, error: getErrorMessage(err, 'Erro ao criar categoria') }
     }
 }
 
@@ -26,7 +36,7 @@ export async function updateCategoria(id, categoria) {
         const res = await api.put(`/categorias/${id}`, categoria)
         return { success: true, data: res.data }
     } catch (err) {
-        return { success: false, error: err.response?.data?.message || 'Erro ao atualizar categoria' }
+        return { success: false, error: getErrorMessage(err, 'Erro ao atualizar categoria') }
     }
 }
 
@@ -36,6 +46,6 @@ export async function deleteCategoria(id) {
         await api.delete(`/categorias/${id}`)
         return { success: true }
     } catch (err) {
-        return { success: false, error: err.response?.data?.message || 'Erro ao deletar categoria' }
+        return { success: false, error: getErrorMessage(err, 'Erro ao deletar categoria') }
     }
 }

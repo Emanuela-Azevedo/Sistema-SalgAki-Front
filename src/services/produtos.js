@@ -1,12 +1,26 @@
 import api from './api'
 
+function getErrorMessage(err, fallback) {
+    const data = err.response?.data
+
+    if (typeof data === 'string') {
+        return data
+    }
+
+    if (Array.isArray(data?.errors)) {
+        return data.errors.join(', ')
+    }
+
+    return data?.message || data?.error || data?.errors || fallback
+}
+
 // Buscar todos os produtos
 export async function getProdutos() {
     try {
         const { data } = await api.get('/produtos')
         return { success: true, data }
     } catch (err) {
-        return { success: false, error: err.response?.data ?? 'Erro ao buscar produtos' }
+        return { success: false, error: getErrorMessage(err, 'Erro ao buscar produtos') }
     }
 }
 
@@ -15,10 +29,7 @@ export async function createProduto(produto) {
         const res = await api.post('/produtos', produto)
         return { success: true, data: res.data }
     } catch (err) {
-        const server = err.response?.data
-        // se o backend retornar um objeto com erros de validação, adapte aqui
-        const message = server?.message || server?.errors || err.response?.data || 'Erro ao criar produto'
-        return { success: false, error: message }
+        return { success: false, error: getErrorMessage(err, 'Erro ao criar produto') }
     }
 }
 
@@ -28,7 +39,7 @@ export async function updateProduto(id, produto) {
         const { data } = await api.put(`/produtos/${id}`, produto)
         return { success: true, data }
     } catch (err) {
-        return { success: false, error: err.response?.data ?? 'Erro ao atualizar produto' }
+        return { success: false, error: getErrorMessage(err, 'Erro ao atualizar produto') }
     }
 }
 
@@ -38,19 +49,27 @@ export async function deleteProduto(id) {
         await api.delete(`/produtos/${id}`)
         return { success: true }
     } catch (err) {
-        return { success: false, error: err.response?.data ?? 'Erro ao excluir produto' }
+        return { success: false, error: getErrorMessage(err, 'Erro ao excluir produto') }
     }
 }
 
 // Movimentar estoque (ENTRADA ou SAIDA)
 export async function movimentarEstoque(id, tipo, quantidade) {
     try {
-        const { data } = await api.patch(`/produtos/${id}/estoque`, { tipo, quantidade })
+        let url
+        if (tipo === 'ENTRADA') {
+            url = `/produtos/${id}/entrada?quantidade=${quantidade}`
+        } else if (tipo === 'SAIDA') {
+            url = `/produtos/${id}/saida?quantidade=${quantidade}`
+        }
+
+        const { data } = await api.put(url)
         return { success: true, data }
     } catch (err) {
-        return { success: false, error: err.response?.data?.message ?? 'Erro ao movimentar estoque' }
+        return { success: false, error: getErrorMessage(err, 'Erro ao movimentar estoque') }
     }
 }
+
 
 // Listar produtos com estoque baixo
 export async function getEstoqueBaixo() {
@@ -58,16 +77,16 @@ export async function getEstoqueBaixo() {
         const { data } = await api.get('/produtos/estoque-baixo')
         return { success: true, data }
     } catch (err) {
-        return { success: false, error: err.response?.data ?? 'Erro ao buscar estoque baixo' }
+        return { success: false, error: getErrorMessage(err, 'Erro ao buscar estoque baixo') }
     }
 }
 
 // Relatório de movimentações por período
 export async function getRelatorio(id, de, ate) {
     try {
-        const { data } = await api.get(`/produtos/${id}/movimentacoes`, { params: { de, ate } })
+        const { data } = await api.get(`/movimentacoes/${id}/relatorio`, { params: { de, ate } })
         return { success: true, data }
     } catch (err) {
-        return { success: false, error: err.response?.data ?? 'Erro ao buscar relatório' }
+        return { success: false, error: getErrorMessage(err, 'Erro ao buscar relatório') }
     }
 }

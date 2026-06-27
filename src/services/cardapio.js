@@ -11,14 +11,26 @@ function getErrorMessage(err, fallback) {
         return data.errors.join(', ')
     }
 
-    return data?.message || data?.error || data?.errors || fallback
+    return (
+        data?.message ||
+        data?.error ||
+        data?.errors ||
+        err.message ||
+        fallback
+    )
 }
 
-export async function enviarCardapioWhatsApp(numeroWhatsApp) {
+export async function obterTextoCardapio() {
     try {
-        const { data } = await api.post('/cardapio/enviar-whatsapp', { numeroWhatsApp })
-        return { success: true, data }
+        const { data } = await api.get('/cardapio/texto');
+        return {
+            success: true,
+            texto: data
+        };
     } catch (err) {
-        return { success: false, error: getErrorMessage(err, 'Erro ao enviar cardápio') }
+        return {
+            success: false,
+            error: getErrorMessage(err, 'Erro ao gerar o cardápio')
+        };
     }
 }

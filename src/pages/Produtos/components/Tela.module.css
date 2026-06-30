@@ -132,6 +132,28 @@
     box-shadow: 0 4px 16px rgba(192, 112, 112, 0.25);
 }
 
+.btnSecundario {
+    flex: 1;
+    padding: 0.7rem;
+    border-radius: 10px;
+    border: 1px solid rgba(160, 80, 80, 0.35);
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    background: #fff;
+    color: #a05050;
+    transition: opacity 0.2s;
+}
+
+.btnSecundario:hover {
+    opacity: 0.8;
+}
+
+.modoBtn {
+    display: flex;
+    gap: 0.5rem;
+}
+
 .btnConfirmar:hover:not(:disabled) {
     opacity: 0.88;
     transform: translateY(-1px);

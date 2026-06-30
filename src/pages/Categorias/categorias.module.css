@@ -109,7 +109,9 @@
 
 /* Tabela */
 .table {
-    width: 100%;
+    width: auto;
+    min-width: 250px;
+    max-width: 400px;
     border-collapse: collapse;
     background: rgba(255, 255, 255, 0.85);
     border-radius: 12px;
@@ -127,8 +129,17 @@
     border-right: 1px solid rgba(180, 80, 80, 0.15);
 }
 
+.table th:first-child,
+.table td:first-child {
+    width: 200px;
+}
+
 .table th:last-child,
 .table td:last-child {
+    width: 70px;
+    text-align: center;
+    border-right: none;
+    white-space: nowrap;
     border-right: none;
 }
 

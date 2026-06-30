@@ -10,13 +10,12 @@ export default function ProdutoItem({ produto, categorias, onEdit, onDelete, edi
             <tr>
                 <td><input className={styles.editInput} value={editForm.nome} onChange={e => setEditForm(f => ({ ...f, nome: e.target.value }))} /></td>
                 <td><input className={styles.editInput} type="number" step="0.01" min="0" value={editForm.preco} onChange={e => setEditForm(f => ({ ...f, preco: e.target.value }))} /></td>
-                <td style={{ textAlign: 'center' }}>{produto.quantidade}</td>
+                <td>{produto.quantidade ?? '-'}</td>
                 <td>
                     <select className={styles.editInput} value={editForm.categoriaId} onChange={e => setEditForm(f => ({ ...f, categoriaId: e.target.value }))}>
                         {categorias.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}
                     </select>
                 </td>
-                <td>{produto.dataValidade ? new Date(`${produto.dataValidade}T00:00:00`).toLocaleDateString('pt-BR') : '-'}</td>
                 <td>
                     <div className={styles.actions}>
                         <button onClick={() => onEdit(produto.id)}>Salvar</button>
@@ -33,7 +32,6 @@ export default function ProdutoItem({ produto, categorias, onEdit, onDelete, edi
             <td>R$ {produto.preco}</td>
             <td>{produto.quantidade ?? '-'}</td>
             <td>{categoriaNome}</td>
-            <td>{produto.dataValidade ? new Date(`${produto.dataValidade}T00:00:00`).toLocaleDateString('pt-BR') : '-'}</td>
             <td>
                 <div className={styles.actions}>
                     <button className={styles.btnEditar} onClick={() => onIniciarEdicao(produto)} title="Editar">✏️</button>

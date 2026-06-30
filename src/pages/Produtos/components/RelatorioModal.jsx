@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { getRelatorioMovimentacoes } from '../../../services/movimentacaoEstoque'
+import { getRelatorioMovimentacoes, getDetalhesMovimentacoes } from '../../../services/movimentacaoEstoque'
 import styles from './Tela.module.css'
 
 export default function RelatorioModal({ produto, onClose }) {
     const [de, setDe] = useState('')
     const [ate, setAte] = useState('')
     const [relatorio, setRelatorio] = useState(null)
+    const [detalhes, setDetalhes] = useState(null)
+    const [modo, setModo] = useState('resumo') // 'resumo' | 'detalhes'
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
@@ -14,10 +16,26 @@ export default function RelatorioModal({ produto, onClose }) {
         if (!de || !ate) return setError('Preencha as duas datas')
         setLoading(true)
         setError('')
-        const res = await getRelatorioMovimentacoes(produto.id, new Date(de).toISOString(), new Date(ate).toISOString())
+        setRelatorio(null)
+        setDetalhes(null)
+
+        if (modo === 'resumo') {
+            const res = await getRelatorioMovimentacoes(produto.id, `${de}T00:00:00`, `${ate}T23:59:59`)
+            if (res.success) {
+                console.log('RESUMO:', res.data)
+                setRelatorio(res.data)
+            }
+            else setError(typeof res.error === 'string' ? res.error : JSON.stringify(res.error))
+        } else {
+            const res = await getDetalhesMovimentacoes(produto.id, `${de}T00:00:00`, `${ate}T23:59:59`)
+            if (res.success) {
+                console.log('DETALHES:', res.data)
+                setDetalhes(res.data)
+            }
+            else setError(typeof res.error === 'string' ? res.error : JSON.stringify(res.error))
+        }
+
         setLoading(false)
-        if (res.success) setRelatorio(res.data)
-        else setError(typeof res.error === 'string' ? res.error : JSON.stringify(res.error))
     }
 
     return (
@@ -27,12 +45,29 @@ export default function RelatorioModal({ produto, onClose }) {
                 <h2 className={styles.titulo}>Relatório de Movimentações</h2>
                 <p className={styles.subtitulo}>{produto.nome}</p>
 
+                <div className={styles.modoBtn}>
+                    <button
+                        type="button"
+                        className={modo === 'resumo' ? styles.btnConfirmar : styles.btnSecundario}
+                        onClick={() => { setModo('resumo'); setRelatorio(null); setDetalhes(null) }}
+                    >
+                        Resumo
+                    </button>
+                    <button
+                        type="button"
+                        className={modo === 'detalhes' ? styles.btnConfirmar : styles.btnSecundario}
+                        onClick={() => { setModo('detalhes'); setRelatorio(null); setDetalhes(null) }}
+                    >
+                        Detalhado
+                    </button>
+                </div>
+
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <label>De
-                        <input type="datetime-local" value={de} onChange={e => { setDe(e.target.value); setError('') }} />
+                        <input type="date" value={de} onChange={e => { setDe(e.target.value); setError('') }} />
                     </label>
                     <label>Até
-                        <input type="datetime-local" value={ate} onChange={e => { setAte(e.target.value); setError('') }} />
+                        <input type="date" value={ate} onChange={e => { setAte(e.target.value); setError('') }} />
                     </label>
                     {error && <span className={styles.erro}>{error}</span>}
                     <div className={styles.acoes}>
@@ -57,7 +92,38 @@ export default function RelatorioModal({ produto, onClose }) {
                                         <tr key={i}>
                                             <td>{m.tipo}</td>
                                             <td>{m.quantidade}</td>
-                                            <td>{new Date(m.dataHora).toLocaleString('pt-BR')}</td>
+                                            <td>{new Date(m.dataHora).toLocaleDateString('pt-BR')}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <p>Nenhuma movimentação no período.</p>
+                        )}
+                    </div>
+                )}
+
+                {detalhes && (
+                    <div className={styles.relatorio}>
+                        {detalhes.length > 0 ? (
+                            <table className={styles.tabelaRelatorio}>
+                                <thead>
+                                    <tr>
+                                        <th>ID Estoque</th>
+                                        <th>Tipo</th>
+                                        <th>Qtd</th>
+                                        <th>Data</th>
+                                        <th>Validade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {detalhes.map((m, i) => (
+                                        <tr key={i}>
+                                            <td>{m.estoqueId ?? '-'}</td>
+                                            <td>{m.tipo}</td>
+                                            <td>{m.quantidade}</td>
+                                            <td>{new Date(m.dataHora).toLocaleDateString('pt-BR')}</td>
+                                            <td>{m.dataValidade ? new Date(`${m.dataValidade}T00:00:00`).toLocaleDateString('pt-BR') : '-'}</td>
                                         </tr>
                                     ))}
                                 </tbody>

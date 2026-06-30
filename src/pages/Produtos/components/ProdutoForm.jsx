@@ -98,8 +98,6 @@ export default function ProdutoForm({ onAdd, onCancel }) {
                 <button type="button" className={styles.btnCancelar} onClick={onCancel}>Cancelar</button>
             </div>
 
-            <span className={styles.fieldInfo}>💡 A data de validade é definida ao movimentar o estoque.</span>
-
             {apiError && <span className={styles.fieldError}>{apiError}</span>}
         </form>
     )

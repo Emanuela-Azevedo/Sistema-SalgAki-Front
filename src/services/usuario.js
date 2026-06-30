@@ -24,3 +24,12 @@ export async function atualizarSenha(novaSenha) {
         return { success: false, error: getErrorMessage(err, 'Erro ao atualizar senha') }
     }
 }
+
+export async function atualizarUsername(novoUsername) {
+    try {
+        const { data } = await api.put('/usuario/username', null, { params: { novoUsername } })
+        return { success: true, data }
+    } catch (err) {
+        return { success: false, error: getErrorMessage(err, 'Erro ao atualizar usuário') }
+    }
+}

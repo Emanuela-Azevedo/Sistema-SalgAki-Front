@@ -86,10 +86,67 @@
     color: #c0392b;
 }
 
-.btnSalvar {
-    margin-top: 0.5rem;
+.botoes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.btnAlterar {
     padding: 0.65rem;
     width: 100%;
+    background: linear-gradient(135deg, #c07070, #e0a080);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 16px rgba(192, 112, 112, 0.25);
+}
+
+.btnAlterar:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.formAlterar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.tituloForm {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #a05050;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.acoes {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+.btnCancelar {
+    flex: 1;
+    padding: 0.65rem;
+    background: #fff;
+    color: #a05050;
+    border: 1px solid rgba(160, 80, 80, 0.35);
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btnSalvar {
+    flex: 1;
+    padding: 0.65rem;
     background: linear-gradient(135deg, #c07070, #e0a080);
     color: white;
     border: none;

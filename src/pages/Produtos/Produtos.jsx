@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 import { getProdutos, updateProduto, deleteProduto } from '../../services/produtos'
 import { getEstoque } from '../../services/estoque'
 import { getCategorias } from '../../services/categorias'
@@ -22,6 +23,8 @@ export default function Produtos() {
     const [toast, setToast] = useState(null)
     const [filtro, setFiltro] = useState({ busca: '', ordenacao: '' })
 
+    const location = useLocation()
+
     const produtosFiltrados = useMemo(() => {
         let lista = [...produtos]
         if (filtro.busca)
@@ -40,7 +43,7 @@ export default function Produtos() {
     useEffect(() => {
         carregarProdutos()
         getCategorias().then(res => { if (res.success) setCategorias(res.data) })
-    }, [])
+    }, [location.pathname])
 
     async function carregarProdutos() {
         setLoading(true)
@@ -100,7 +103,7 @@ export default function Produtos() {
             categoriaId: Number(editForm.categoriaId)
         })
         if (res.success) {
-            setProdutos(prev => prev.map(p => p.id === id ? res.data : p))
+            await carregarProdutos()
             setEditandoId(null)
             showToast('Produto atualizado com sucesso!')
         } else {

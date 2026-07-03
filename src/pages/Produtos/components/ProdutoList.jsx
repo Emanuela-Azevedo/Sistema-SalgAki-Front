@@ -10,7 +10,6 @@ export default function ProdutoList({ produtos, categorias, onEdit, onDelete, ed
                 <th>Preço</th>
                 <th style={{ textAlign: 'center' }}>Quantidade</th>
                 <th>Categoria</th>
-                <th>Validade</th>
                 <th>Ações</th>
             </tr>
             </thead>

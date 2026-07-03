@@ -21,17 +21,11 @@ export default function RelatorioModal({ produto, onClose }) {
 
         if (modo === 'resumo') {
             const res = await getRelatorioMovimentacoes(produto.id, `${de}T00:00:00`, `${ate}T23:59:59`)
-            if (res.success) {
-                console.log('RESUMO:', res.data)
-                setRelatorio(res.data)
-            }
+            if (res.success) setRelatorio(res.data)
             else setError(typeof res.error === 'string' ? res.error : JSON.stringify(res.error))
         } else {
             const res = await getDetalhesMovimentacoes(produto.id, `${de}T00:00:00`, `${ate}T23:59:59`)
-            if (res.success) {
-                console.log('DETALHES:', res.data)
-                setDetalhes(res.data)
-            }
+            if (res.success) setDetalhes(res.data)
             else setError(typeof res.error === 'string' ? res.error : JSON.stringify(res.error))
         }
 

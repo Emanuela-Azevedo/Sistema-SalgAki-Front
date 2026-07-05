@@ -34,9 +34,12 @@ export default function Perfil() {
 
     async function handleSubmitUsuario(e) {
         e.preventDefault()
-        if (!form.novoUsername?.trim()) return setErros({ novoUsername: 'Usuário é obrigatório' })
+        const e2 = {}
+        if (!form.senhaAtual?.trim()) e2.senhaAtual = 'Senha atual é obrigatória'
+        if (!form.novoUsername?.trim()) e2.novoUsername = 'Usuário é obrigatório'
+        if (Object.keys(e2).length) return setErros(e2)
 
-        const res = await atualizarUsername(form.novoUsername.trim())
+        const res = await atualizarUsername(form.senhaAtual.trim(), form.novoUsername.trim())
         if (res.success) {
             setUsername(res.data.username)
             cancelar()
@@ -49,12 +52,13 @@ export default function Perfil() {
     async function handleSubmitSenha(e) {
         e.preventDefault()
         const e2 = {}
+        if (!form.senhaAtual?.trim()) e2.senhaAtual = 'Senha atual é obrigatória'
         if (!form.novaSenha) e2.novaSenha = 'Nova senha é obrigatória'
         else if (form.novaSenha.length < 4) e2.novaSenha = 'Mínimo 4 caracteres'
         if (form.confirmarSenha !== form.novaSenha) e2.confirmarSenha = 'As senhas não coincidem'
         if (Object.keys(e2).length) return setErros(e2)
 
-        const res = await atualizarSenha(form.novaSenha)
+        const res = await atualizarSenha(form.senhaAtual.trim(), form.novaSenha)
         if (res.success) {
             cancelar()
             setToast({ message: 'Senha atualizada com sucesso!', type: 'success' })
@@ -85,6 +89,17 @@ export default function Perfil() {
                     <form onSubmit={handleSubmitUsuario} noValidate className={styles.formAlterar}>
                         <p className={styles.tituloForm}>Alterar Usuário</p>
                         <div className={styles.field}>
+                            <label className={styles.label}>Senha Atual</label>
+                            <input
+                                name="senhaAtual"
+                                type="password"
+                                value={form.senhaAtual || ''}
+                                onChange={handleChange}
+                                className={erros.senhaAtual ? styles.inputError : styles.input}
+                            />
+                            {erros.senhaAtual && <span className={styles.fieldError}>{erros.senhaAtual}</span>}
+                        </div>
+                        <div className={styles.field}>
                             <label className={styles.label}>Novo Usuário</label>
                             <input
                                 name="novoUsername"
@@ -105,6 +120,17 @@ export default function Perfil() {
                 {modo === 'senha' && (
                     <form onSubmit={handleSubmitSenha} noValidate className={styles.formAlterar}>
                         <p className={styles.tituloForm}>Alterar Senha</p>
+                        <div className={styles.field}>
+                            <label className={styles.label}>Senha Atual</label>
+                            <input
+                                name="senhaAtual"
+                                type="password"
+                                value={form.senhaAtual || ''}
+                                onChange={handleChange}
+                                className={erros.senhaAtual ? styles.inputError : styles.input}
+                            />
+                            {erros.senhaAtual && <span className={styles.fieldError}>{erros.senhaAtual}</span>}
+                        </div>
                         <div className={styles.field}>
                             <label className={styles.label}>Nova Senha</label>
                             <input

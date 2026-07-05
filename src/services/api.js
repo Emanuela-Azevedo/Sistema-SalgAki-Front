@@ -8,6 +8,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
     const token = tokenStorage.getToken()
     if (token) {
+        // sempre adiciona o prefixo Bearer na hora de enviar
         config.headers.Authorization = `Bearer ${token}`
     }
     return config

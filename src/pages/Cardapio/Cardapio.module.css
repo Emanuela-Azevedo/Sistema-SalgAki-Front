@@ -123,3 +123,9 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+.buttons {
+    display: flex;
+    gap: 20px; /* aumenta o espaço entre os botões */
+    justify-content: center; /* centraliza os botões */
+}
+

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext'   // 👈 usa o contexto
+import { useAuth } from '../../context/AuthContext'
 import styles from './Login.module.css'
 import logo from '../../assets/logo-SalgAki.png.png'
 
@@ -33,13 +33,12 @@ export default function Login() {
     if (Object.keys(errs).length) return setErrors(errs)
 
     setLoading(true)
-    const { success, error } = await login(form.username, form.password) // 👈 usa login do contexto
+    const { success, error } = await login(form.username, form.password)
     setLoading(false)
 
     if (!success) return setApiError(error)
 
-    // redireciona para a rota principal que existe
-    navigate('/dashboard')   // 👈 ajuste aqui conforme sua rota real
+    navigate('/dashboard')
   }
 
   return (

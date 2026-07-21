@@ -47,20 +47,43 @@ export default function Produtos() {
 
     async function carregarProdutos() {
         setLoading(true)
+
         const res = await getProdutos()
+
         if (res.success) {
+
             const comEstoque = await Promise.all(
-                res.data.map(async p => {
-                    const est = await getEstoque(p.id)
-                    return est.success
-                        ? { ...p, quantidade: est.data.quantidade, dataValidade: est.data.dataValidade }
-                        : { ...p, quantidade: 0, dataValidade: null }
+                res.data.map(async (produto) => {
+
+                    const est = await getEstoque(produto.id)
+
+                    if (!est.success) {
+                        return {
+                            ...produto,
+                            quantidade: 0,
+                            estoques: []
+                        }
+                    }
+
+                    const quantidadeTotal = est.data.reduce(
+                        (total, lote) => total + lote.quantidade,
+                        0
+                    )
+
+                    return {
+                        ...produto,
+                        quantidade: quantidadeTotal,
+                        estoques: est.data
+                    }
                 })
             )
+
             setProdutos(comEstoque)
+
         } else {
             showToast(res.error || 'Erro ao carregar produtos', 'error')
         }
+
         setLoading(false)
     }
 
@@ -70,8 +93,8 @@ export default function Produtos() {
         showToast('Produto adicionado com sucesso!')
     }
 
-    function handleMovimentacaoSuccess(produtoAtualizado) {
-        setProdutos(prev => prev.map(p => p.id === produtoAtualizado.id ? produtoAtualizado : p))
+    async function handleMovimentacaoSuccess() {
+        await carregarProdutos()
         showToast('Estoque atualizado com sucesso!')
     }
 
@@ -89,8 +112,8 @@ export default function Produtos() {
             return showToast('Nome é obrigatório', 'error')
         }
 
-        if (Number(editForm.preco) < 0) {
-            return showToast('Preço não pode ser negativo', 'error')
+        if (Number(editForm.preco) <= 0) {
+            return showToast('Preço deve ser maior que zero', 'error')
         }
 
         if (!editForm.categoriaId) {

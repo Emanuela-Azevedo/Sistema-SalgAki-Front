@@ -14,7 +14,7 @@ function getErrorMessage(err, fallback) {
     return data?.message || data?.error || data?.errors || fallback
 }
 
-// Relatório de movimentações por período
+// Relatório de movimentações
 export async function getRelatorioMovimentacoes(produtoId, de, ate) {
     try {
         const { data } = await api.get(`/movimentacoes/${produtoId}/relatorio`, {
@@ -26,7 +26,7 @@ export async function getRelatorioMovimentacoes(produtoId, de, ate) {
     }
 }
 
-// Listar movimentações detalhadas por período
+// Listar movimentações detalhadas
 export async function getDetalhesMovimentacoes(produtoId, de, ate) {
     try {
         const { data } = await api.get(`/movimentacoes/${produtoId}/detalhes`, {
@@ -34,7 +34,6 @@ export async function getDetalhesMovimentacoes(produtoId, de, ate) {
         })
         return { success: true, data }
     } catch (err) {
-        // Se o backend retornar 204 (no content), tratamos como lista vazia
         if (err.response?.status === 204) {
             return { success: true, data: [] }
         }

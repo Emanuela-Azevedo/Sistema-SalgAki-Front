@@ -11,18 +11,13 @@ function getErrorMessage(err, fallback) {
         return data.errors.join(', ')
     }
 
-    return data?.message || data?.error || data?.errors || fallback
+    return data?.mensagem
+        || data?.message
+        || data?.error
+        || data?.errors
+        || fallback
 }
 
-// Criar estoque inicial para um produto
-export async function createEstoque(dto) {
-    try {
-        const { data } = await api.post('/estoques', dto)
-        return { success: true, data }
-    } catch (err) {
-        return { success: false, error: getErrorMessage(err, 'Erro ao criar estoque') }
-    }
-}
 
 // Consultar estoque de um produto
 export async function getEstoque(produtoId) {
@@ -39,14 +34,13 @@ export async function entradaEstoque(produtoId, quantidade, dataValidade) {
     try {
         const params = { quantidade }
         if (dataValidade) params.dataValidade = dataValidade
-        const { data } = await api.put(`/estoques/${produtoId}/entrada`, null, { params })
+        const { data } = await api.post(`/estoques/${produtoId}/entrada`, null, { params })
         return { success: true, data }
     } catch (err) {
         return { success: false, error: getErrorMessage(err, 'Erro ao adicionar entrada de estoque') }
     }
 }
 
-// Remover saída de estoque
 export async function saidaEstoque(produtoId, quantidade) {
     try {
         const { data } = await api.put(`/estoques/${produtoId}/saida`, null, {
@@ -64,6 +58,22 @@ export async function getEstoquesBaixos() {
         const { data } = await api.get('/estoques/baixo')
         return { success: true, data }
     } catch (err) {
-        return { success: false, error: getErrorMessage(err, 'Erro ao listar estoques baixos') }
+        return {
+            success: false,
+            error: getErrorMessage(err, 'Erro ao listar estoques baixos')
+        }
+    }
+}
+
+// Listar todos os estoques (lotes)
+export async function getTodosEstoques() {
+    try {
+        const { data } = await api.get('/estoques')
+        return { success: true, data }
+    } catch (err) {
+        return {
+            success: false,
+            error: getErrorMessage(err, 'Erro ao listar estoques')
+        }
     }
 }

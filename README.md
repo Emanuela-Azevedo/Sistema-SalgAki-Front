@@ -160,9 +160,10 @@ Este projeto foi desenvolvido para fins acadêmicos como requisito da graduaçã
 
 ---
 
-# 👩‍💻 Desenvolvedora
+# 👩‍💻 Desenvolvedoras
 
 **Emanuela Azevedo**
+**e Luciana Farias**
 
 Graduanda em **Análise e Desenvolvimento de Sistemas**
 

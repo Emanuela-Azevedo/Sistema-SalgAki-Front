@@ -113,21 +113,6 @@ O Front-end consome os serviços disponibilizados pela API do **Sistema SalgAki*
 
 ---
 
-# 📸 Demonstração
-
-Adicione aqui imagens das principais telas da aplicação.
-
-```text
-assets/
-├── <img width="1870" height="920" alt="image" src="https://github.com/user-attachments/assets/d9a61c72-e09a-4b71-923e-1d3706ee29e3" />
-├── clientes.png
-├── produtos.png
-├── pedidos.png
-└── dashboard.png
-```
-
----
-
 # 📚 Aprendizados
 
 Durante o desenvolvimento deste projeto foram aplicados conhecimentos em:

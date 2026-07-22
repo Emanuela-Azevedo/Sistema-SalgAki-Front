@@ -169,6 +169,7 @@ Graduanda em **Análise e Desenvolvimento de Sistemas**
 
 **GitHub:**  
 https://github.com/Emanuela-Azevedo
+https://github.com/LucianaFarias 
 
 ---
 

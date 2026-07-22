@@ -1,4 +1,4 @@
-`````md
+md
 # 💻 Sistema SalgAki Front-end
 
 <div align="center">
@@ -178,5 +178,4 @@ https://github.com/Emanuela-Azevedo
 *"Transformando conhecimento em soluções através da tecnologia."*
 
 </div>
-````
 

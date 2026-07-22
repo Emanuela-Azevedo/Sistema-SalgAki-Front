@@ -1,4 +1,4 @@
-````md
+`````md
 # 💻 Sistema SalgAki Front-end
 
 <div align="center">
@@ -160,10 +160,9 @@ Este projeto foi desenvolvido para fins acadêmicos como requisito da graduaçã
 
 ---
 
-# 👩‍💻 Desenvolvedoras
+# 👩‍💻 Desenvolvedora
 
 **Emanuela Azevedo**
-**e Luciana Farias**
 
 Graduanda em **Análise e Desenvolvimento de Sistemas**
 
@@ -180,3 +179,4 @@ https://github.com/Emanuela-Azevedo
 
 </div>
 ````
+
